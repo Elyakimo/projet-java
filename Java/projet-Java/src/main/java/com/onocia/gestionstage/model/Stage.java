@@ -33,6 +33,32 @@ public class Stage {
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;
     }
+    public String Entreprise(String nomEntreprise, String nomTuteur, String prenomTuteur, String mailEntreprise, String telephoneEntreprise, String adresseEntreprise){
+        this.nomEntreprise = nomEntreprise;
+        this.nomTuteur = nomTuteur;
+        this.prenomTuteur = prenomTuteur;
+        this.mailEntreprise = mailEntreprise;
+        this.telephoneEntreprise = telephoneEntreprise;
+        this.adresseEntreprise = adresseEntreprise;
+        return "Stage{" + 
+                " entreprise= " + nomEntreprise + '\'' +
+                " , tuteur= " + prenomTuteur + " " + nomTuteur + '\'' + 
+                " , mail entreprise= " + mailEntreprise + 
+                " , téléphone entreprise= " + telephoneEntreprise +
+                " , adresse entreprise= " + adresseEntreprise + '}';
+    }
+    public String Etudiant(String nom, String prenom, String numeroEtudiant, String mailEtudiant, String adresseEtudiant){
+        this.nom = nom;
+        this.prenom = prenom;
+        this.numeroEtudiant = numeroEtudiant;
+        this.mailEtudiant = mailEtudiant;
+        this.adresseEtudiant = adresseEtudiant;
+        return "Stage{" + 
+                " étudiant= " + prenom + " " + nom +
+                " ,mail étudiant= " + mailEtudiant +
+                " ,numéro étudiant= " + numeroEtudiant +
+                " , adresse étudiant= " + adresseEtudiant + '}';
+    }
 
     public String getNom(){
         return nom;
