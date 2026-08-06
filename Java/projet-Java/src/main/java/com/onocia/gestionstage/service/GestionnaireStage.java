@@ -1,4 +1,4 @@
-package main.java.com.onocia.gestionstage.service;
+package service;
 
 public class GestionnaireStage {
     

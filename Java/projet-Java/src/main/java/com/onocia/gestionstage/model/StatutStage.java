@@ -1,4 +1,4 @@
-package main.java.com.onocia.gestionstage.model;
+package model;
 
 public enum StatutStage {
     CANDIDATURE,
