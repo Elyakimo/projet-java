@@ -24,6 +24,9 @@ public class Stage {
     public StatutStage getStatut(){
         return statut;
     }
+    public void setStatut(StatutStage statut){
+        this.statut = statut;
+    }
     public LocalDate getDateDebut(){
         return dateDebut;
     }

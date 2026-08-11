@@ -1,37 +1,75 @@
 package service;
 
 import java.util.List;
+import java.util.ArrayList;
+import model.Etudiant;
+import model.Entreprise;
+import model.Stage;
+import model.StatutStage;
+
 
 public class GestionnaireStage {
-    public void listerStages() {
-        // Implémentation de la méthode pour lister les stages
-        ListeStages listeStages = new ListeStages();
-        for (Stage stage : ListeStages.getStages()) {
-            System.out.println(stage);
-        }
+    private List<Stage> stages;
+
+    public GestionnaireStage() {
+        this.stages = new ArrayList<>();
     }
     public void ajouterStage(Stage stage) {
-        // Implémentation de la méthode pour ajouter un stage
-        ListeStages.ajouterStage(stage);
+        stages.add(stage);
     }
     public void supprimerStage(Stage stage) {
-        // Implémentation de la méthode pour supprimer un stage
-        ListeStages.supprimerStage(stage);
+        stages.remove(stage);
+    }
+    public List<Stage> listerStages() {
+        return new ArrayList<>(stages);
     }
     public void modifierStatutStage(Stage stage, StatutStage nouveauStatut) {
-        // Implémentation de la méthode pour modifier le statut d'un stage
         stage.setStatut(nouveauStatut);
+   
     }
     public List<Stage> rechercherParStatut(StatutStage statut) {
-        // Implémentation de la méthode pour rechercher des stages par statut
-        return ListeStages.rechercherParStatut(statut);
+        List<Stage> stagesTrouves = new ArrayList<>();
+        for (Stage stage : stages) {
+            if (stage.getStatut() == statut) {
+                stagesTrouves.add(stage);
+            }
+        }
+        return stagesTrouves;
     }
     public List<Stage> rechercherParEtudiant(Etudiant etudiant) {
-        // Implémentation de la méthode pour rechercher des stages par étudiant
-        return ListeStages.rechercherParEtudiant(etudiant);
+        List<Stage> stagesTrouves = new ArrayList<>();
+        for (Stage stage : stages) {
+            if (stage.getEtudiant().equals(etudiant)) {
+                stagesTrouves.add(stage);
+            }
+        }
+        return stagesTrouves;
     }
     public List<Stage> rechercherParEntreprise(Entreprise entreprise) {
-        // Implémentation de la méthode pour rechercher des stages par entreprise
-        return ListeStages.rechercherParEntreprise(entreprise);
+        List<Stage> stagesTrouves = new ArrayList<>();
+        for (Stage stage : stages) {
+            if (stage.getEntreprise().equals(entreprise)) {
+                stagesTrouves.add(stage);
+            }
+        }
+        return stagesTrouves;
+    }
+    public List<Stage> rechercherParNomEtudiant(String nom) {
+        List<Stage> stagesTrouves = new ArrayList<>();
+        for (Stage stage : stages) {
+            if (stage.getEtudiant().getNom().equalsIgnoreCase(nom)) {
+                stagesTrouves.add(stage);
+            }
+        }
+        return stagesTrouves;
+    }
+    public List<Stage> rechercherParNomEntreprise(String nomEntreprise) {
+        List<Stage> stagesTrouves = new ArrayList<>();
+        for (Stage stage : stages) {
+            if (stage.getEntreprise().getNomEntreprise().equalsIgnoreCase(nomEntreprise)){
+                stagesTrouves.add(stage);
+            }
+        }
+        return stagesTrouves;
     }
 }
