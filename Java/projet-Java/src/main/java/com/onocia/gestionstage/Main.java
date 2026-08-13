@@ -10,6 +10,7 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
         GestionnaireStage gestionnaire = new GestionnaireStage();
+        gestionnaire.charger("stage.csv");
         int choix = -1;
         while (choix != 0) {
             System.out.println("=====Gestionnaire de stages=====");
@@ -63,6 +64,7 @@ public class Main {
                     Stage stage = new Stage(etudiant, entreprise, statut, java.time.LocalDate.parse(dateDebutStr), java.time.LocalDate.parse(dateFinStr));
                     gestionnaire.ajouterStage(stage);
                     System.out.println("Stage ajouté avec succès ! Voici les nouvelles informations : " + stage);
+                    gestionnaire.sauvegarder("stage.csv");
                 }
                  
                 case 2 -> { 
@@ -105,6 +107,8 @@ public class Main {
                
             } 
             
-        }scanner.close();
+        }
+        gestionnaire.sauvegarder("stage.csv");
+        scanner.close();
     }
 }
