@@ -6,9 +6,9 @@ public class Entreprise {
     private String nomTuteur;
     private String prenomTuteur;
     private String mailEntreprise;
-    private int telephoneEntreprise;
+    private Integer telephoneEntreprise;
     private String adresseEntreprise;  
-    public Entreprise(String nomEntreprise, String nomTuteur, String prenomTuteur, String mailEntreprise, int telephoneEntreprise, String adresseEntreprise){
+    public Entreprise(String nomEntreprise, String nomTuteur, String prenomTuteur, String mailEntreprise, Integer telephoneEntreprise, String adresseEntreprise){
         this.nomEntreprise = nomEntreprise;
         this.nomTuteur = nomTuteur;
         this.prenomTuteur = prenomTuteur;
@@ -28,7 +28,7 @@ public class Entreprise {
     public String getMailEntreprise(){
         return mailEntreprise;
     }
-    public int getTelephoneEntreprise(){
+    public Integer getTelephoneEntreprise(){
         return telephoneEntreprise;
     }
     public String getAdresseEntreprise(){
