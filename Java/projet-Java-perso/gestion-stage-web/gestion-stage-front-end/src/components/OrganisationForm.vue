@@ -2,7 +2,7 @@
     import { ref, watch } from 'vue'
 
     const props = defineProps({
-        oganisationAModifier: {
+        organisationAModifier: {
             type: Object,
             default: null
         }
@@ -28,7 +28,7 @@
         }
     })
 
-    async function soummettreFormulaire() {
+    async function soumettreFormulaire() {
         const donnees = {
             nomEntreprise: nomEntreprise.value,
             mailEntreprise: mailEntreprise.value,
@@ -61,10 +61,10 @@
 
 <template>
   <form @submit.prevent="soumettreFormulaire">
-    <input v-model="nomEntreprise" placeholder="Nom de l'entreprise" required />
-    <input v-model="mailEntreprise" placeholder="Mail" required />
-    <input v-model="telephoneEntreprise" placeholder="Téléphone" type="number" required />
-    <input v-model="adresseEntreprise" placeholder="Adresse" required />
+    <input v-model="nomEntreprise" placeholder="Nom de l'entreprise" required id="nom-entreprise"/>
+    <input v-model="mailEntreprise" placeholder="Mail" required id="mail-entreprise"/>
+    <input v-model="telephoneEntreprise" placeholder="Téléphone" type="number" required id="telephone-entreprise"/>
+    <input v-model="adresseEntreprise" placeholder="Adresse" required id="adresse-entreprise"/>
     <button type="submit">{{ organisationAModifier ? 'Modifier' : 'Créer' }}</button>
   </form>
 </template>

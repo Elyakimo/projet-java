@@ -2,6 +2,7 @@
 import OrganisationForm from '@/components/OrganisationForm.vue'
 import { ref, onMounted } from 'vue'
 
+const organisationEnEdition = ref(null)
 const organisations = ref([])
 
 async function chargerOrganisations(){
@@ -39,8 +40,7 @@ onMounted(() => {
   <div>
     <h1>Liste des organisations</h1>
 
-    <OrganisationForm
-      :organisation-a-modifier="organisationEnEdition"
+    <OrganisationForm :organisation-a-modifier="organisationEnEdition"
       @created="onOrganisationCreee"
       @updated="onOrganisationModifiee"
     />
