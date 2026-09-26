@@ -250,14 +250,14 @@ existante en base — point à traiter avec attention lors de l'écriture de `Tu
 - 4 repositories Spring Data JPA (`OrganisationRepository`, `StagiaireRepository`, `TuteurRepository`, `StageRepository`)
 - 4 contrôleurs REST complets et testés (CRUD sur les 4 entités, gestion des relations `@ManyToOne`, cast ENUM PostgreSQL résolu)
 - **Backend Spring Boot entièrement fonctionnel et validé de bout en bout**
+- Couche Service ajoutée sur les 4 entités (`OrganisationService`, `StagiaireService`, `TuteurService`, `StageService`)
+- Gestion d'erreurs centralisée (`RessourceNonTrouveeException` + `GlobalExceptionHandler`) : 400/404 propres au lieu de 500 bruts
+- Architecture 3 couches complète : Controller → Service → Repository, testée et validée
 
-### ⬜ À venir — déroulement détaillé
+### ⬜ À venir
 
-**Étape 1 (optionnelle) — Couche Service**
-Ajouter une couche service si la logique métier devient plus complexe que du simple CRUD (ex : recherche par statut, par nom d'étudiant/entreprise — équivalent de ce qui existait déjà dans `GestionnaireStage.java` du projet console). Permettrait aussi de corriger la gestion d'erreurs actuelle (certaines exceptions remontent en 500 au lieu de 400/404 propres).
-
-**Étape 2 — Frontend Vue**
+**Étape 1 — Frontend Vue**
 Construire l'interface Vue qui consomme les 20 endpoints REST déjà testés et validés.
 
-**Étape 3 (bonus) — Sécurité**
+**Étape 2 (bonus) — Sécurité**
 Ajouter Spring Security si le projet doit un jour être accessible au-delà d'un usage strictement personnel/local.

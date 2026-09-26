@@ -1,7 +1,3 @@
-*.class
-*:Zone.Identifier
-target/
-.vscode/
 # Logs
 logs
 *.log
@@ -40,4 +36,4 @@ coverage
 __screenshots__/
 
 # Vite
-*.timestamp-*-*.
+*.timestamp-*-*.mjs
