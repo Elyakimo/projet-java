@@ -16,6 +16,7 @@ import HelloWorld from './components/HelloWorld.vue'
         <RouterLink to="/organisations">Organisations</RouterLink>
         <RouterLink to="/stagiaires">Stagiaires</RouterLink>
         <RouterLink to="/tuteurs">Tuteurs</RouterLink>
+        <RouterLink to="/stages">Stages</RouterLink>
       </nav>
     </div>
   </header>
