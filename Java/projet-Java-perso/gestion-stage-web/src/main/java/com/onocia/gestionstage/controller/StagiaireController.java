@@ -1,6 +1,5 @@
 package com.onocia.gestionstage.controller;
 
-import com.onocia.gestionstage.model.Organisation;
 import com.onocia.gestionstage.model.Stagiaire;
 import com.onocia.gestionstage.service.StagiaireService;
 
