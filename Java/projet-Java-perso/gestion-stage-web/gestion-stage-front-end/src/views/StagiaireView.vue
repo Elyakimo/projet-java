@@ -1,58 +1,58 @@
 <script setup>
-import OrganisationForm from '@/components/OrganisationForm.vue'
+import StagiaireForm from '@/components/StagiaireForm.vue'
 import { ref, onMounted } from 'vue'
 
-const organisationEnEdition = ref(null)
-const organisations = ref([])
+const stagiaireEnEdition = ref(null)
+const stagiaires = ref([])
 
-async function chargerOrganisations(){
-    const response = await fetch('http://localhost:8080/api/organisations')
+async function chargerStagiaires(){
+    const response = await fetch('http://localhost:8080/api/stagiaires')
     const data = await response.json()
-    organisations.value = data
+    stagiaires.value = data
     
 }
-async function supprimerOrganisation(id) {
-    await fetch(`http://localhost:8080/api/organisations/${id}`,{
+async function supprimerStagiaire(id) {
+    await fetch(`http://localhost:8080/api/stagiaires/${id}`,{
         method: 'DELETE'
     })
-    await chargerOrganisations()
+    await chargerStagiaires()
 }
 
-function modifierOrganisation(organisation) {
-  organisationEnEdition.value = organisation
+function modifierStagiaire(stagiaire) {
+    stagiaireEnEdition.value = stagiaire
 }
 
-async function onOrganisationCreee() {
-  await chargerOrganisations()
+async function onStagiaireCreee() {
+  await chargerStagiaires()
 }
 
-async function onOrganisationModifiee() {
-  organisationEnEdition.value = null
-  await chargerOrganisations()
+async function onStagiaireModifiee() {
+    stagiaireEnEdition.value = null
+    await chargerStagiaires()
 }
 
 onMounted(() => {
-    chargerOrganisations()
+    chargerStagiaires()
 })
 </script>
 
 <template>
   <div>
-    <h1>Liste des organisations</h1>
+    <h1>Liste des stagiaires</h1>
 
-    <OrganisationForm :organisation-a-modifier="organisationEnEdition"
-      @created="onOrganisationCreee"
-      @updated="onOrganisationModifiee"
+    <StagiaireForm :stagiaire-a-modifier="stagiaireEnEdition"
+      @created="onStagiaireCreee"
+      @updated="onStagiaireModifiee"
     />
 
     <ul>
-      <li v-for="organisation in organisations" :key="organisation.id">
+      <li v-for="stagiaire in stagiaires" :key="stagiaire.id">
         <span class="infos">
-          <strong>{{ organisation.nomEntreprise }}</strong>
-          <span class="detail">{{ organisation.mailEntreprise }}</span>
+          <strong>{{ stagiaire.nom }} {{ stagiaire.prenom }}</strong>
+          <span class="detail">{{ stagiaire.mailEtudiant }} — {{ stagiaire.classe }}</span>
         </span>
-        <button @click="modifierOrganisation(organisation)">Modifier</button>
-        <button @click="supprimerOrganisation(organisation.id)">Supprimer</button>
+        <button @click="modifierStagiaire(stagiaire)">Modifier</button>
+        <button @click="supprimerStagiaire(stagiaire.id)">Supprimer</button>
       </li>
     </ul>
   </div>
@@ -87,7 +87,6 @@ li:hover {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
   transform: translateY(-1px);
 }
-
 li button {
   margin-left: 0.5rem;
   padding: 0.4rem 0.8rem;

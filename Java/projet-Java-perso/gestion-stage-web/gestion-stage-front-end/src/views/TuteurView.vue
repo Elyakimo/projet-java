@@ -1,61 +1,63 @@
 <script setup>
-import OrganisationForm from '@/components/OrganisationForm.vue'
-import { ref, onMounted } from 'vue'
+    import TuteurForm from '@/components/TuteurForm.vue'
+    import { ref, onMounted } from 'vue'
 
-const organisationEnEdition = ref(null)
-const organisations = ref([])
+    const tuteurEnEdition = ref(null)
+    const tuteurs = ref([])
 
-async function chargerOrganisations(){
-    const response = await fetch('http://localhost:8080/api/organisations')
-    const data = await response.json()
-    organisations.value = data
+    async function chargerTuteurs(){
+        const response = await fetch('http://localhost:8080/api/tuteurs')
+        const data = await response.json()
+        tuteurs.value = data
+    }
+
+    async function supprimerTuteurs(id){
+        await fetch(`http://localhost:8080/api/tuteurs/${id}`, {
+            method: 'DELETE'
+        })
+        await chargerTuteurs()
+    }
     
-}
-async function supprimerOrganisation(id) {
-    await fetch(`http://localhost:8080/api/organisations/${id}`,{
-        method: 'DELETE'
+    function modifierTuteurs(tuteur) {
+        tuteurEnEdition.value = tuteur
+    }
+
+    async function onTuteurCreee() {
+        await chargerTuteurs()
+    }
+
+    async function onTuteurModifiee() {
+        tuteurEnEdition.value = null
+        await chargerTuteurs()
+    }
+
+    onMounted(() => {
+        chargerTuteurs()
     })
-    await chargerOrganisations()
-}
-
-function modifierOrganisation(organisation) {
-  organisationEnEdition.value = organisation
-}
-
-async function onOrganisationCreee() {
-  await chargerOrganisations()
-}
-
-async function onOrganisationModifiee() {
-  organisationEnEdition.value = null
-  await chargerOrganisations()
-}
-
-onMounted(() => {
-    chargerOrganisations()
-})
 </script>
 
 <template>
-  <div>
-    <h1>Liste des organisations</h1>
+    <div>
+        <h1>Liste des tuteurs</h1>
 
-    <OrganisationForm :organisation-a-modifier="organisationEnEdition"
-      @created="onOrganisationCreee"
-      @updated="onOrganisationModifiee"
-    />
+        <TuteurForm :tuteur-a-modifier="tuteurEnEdition"
+        @created="onTuteurCreee"
+        @updated="onTuteurModifiee"
+        />
 
-    <ul>
-      <li v-for="organisation in organisations" :key="organisation.id">
-        <span class="infos">
-          <strong>{{ organisation.nomEntreprise }}</strong>
-          <span class="detail">{{ organisation.mailEntreprise }}</span>
-        </span>
-        <button @click="modifierOrganisation(organisation)">Modifier</button>
-        <button @click="supprimerOrganisation(organisation.id)">Supprimer</button>
-      </li>
-    </ul>
-  </div>
+        <ul>
+            <li v-for="tuteur in tuteurs" :key="tuteur.id">
+              <span class="infos">
+                <strong>{{ tuteur.nomTuteur }} {{ tuteur.prenomTuteur }}</strong>
+                <span class="detail">{{ tuteur.organisation.nomEntreprise }}</span>
+              </span>
+              <span>
+                <button @click="modifierTuteurs(tuteur)">Modifier</button>
+                <button @click="supprimerTuteurs(tuteur.id)">Supprimer</button>
+              </span>
+            </li>
+        </ul>
+    </div>
 </template>
 <style scoped>
 h1 {
@@ -87,7 +89,6 @@ li:hover {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
   transform: translateY(-1px);
 }
-
 li button {
   margin-left: 0.5rem;
   padding: 0.4rem 0.8rem;
