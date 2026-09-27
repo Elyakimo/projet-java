@@ -17,23 +17,4 @@
   color: var(--text-muted);
   margin-bottom: 2rem;
 }
-
-.home-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-}
-
-.home-link {
-  padding: 0.75rem 1.25rem;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  background: var(--surface);
-  font-weight: 500;
-}
-
-.home-link:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-}
 </style>

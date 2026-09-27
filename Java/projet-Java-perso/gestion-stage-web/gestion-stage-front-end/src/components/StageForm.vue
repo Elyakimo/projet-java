@@ -96,28 +96,28 @@
 
 <template>
     <form @submit.prevent="soumettreFormulaire">
-        <select v-model="statut" required>
+        <select v-model="statut" required id="choixStatut">
             <option value="" disabled>Choisir un statut</option>
             <option value="CANDIDATURE">Candidature</option>
             <option value="EN_COURS">En cours</option>
             <option value="TERMINE">Terminé</option>
             <option value="REFUSE">Refusé</option>
         </select>
-        <input v-model="dateDebut" type="date" required/>
-        <input v-model="dateFin" type="date" required />
-        <select v-model="organisationId" required>
+        <input v-model="dateDebut" type="date" required id="ajoutDateDebut"/>
+        <input v-model="dateFin" type="date" required id="ajoutDateFin"/>
+        <select v-model="organisationId" required id="choixOrganisation">
             <option value="" disabled>Choisir une organisation</option>
             <option v-for="organisation in organisations" :key="organisation.id" :value="organisation.id">
                 {{ organisation.nomEntreprise }}
             </option>
         </select>
-    <select v-model="tuteurId" required>
+    <select v-model="tuteurId" required id="choixTuteur">
       <option value="" disabled>Choisir un tuteur</option>
       <option v-for="tuteur in tuteurs" :key="tuteur.id" :value="tuteur.id">
         {{tuteur.nomTuteur }} — {{ tuteur.prenomTuteur }}
       </option>
     </select>
-    <select v-model="stagiaireId" required>
+    <select v-model="stagiaireId" required id="choixStagiaire">
       <option value="" disabled>Choisir un stagiaire</option>
       <option v-for="stagiaire in stagiaires" :key="stagiaire.id" :value="stagiaire.id">
         {{stagiaire.nom }} — {{ stagiaire.prenom }}

@@ -47,7 +47,10 @@ onMounted(() => {
 
     <ul>
       <li v-for="stagiaire in stagiaires" :key="stagiaire.id">
-        {{ stagiaire.nom }} — {{ stagiaire.prenom }} — {{ stagiaire.classe }} — {{ stagiaire.mailEtudiant }}
+        <span class="infos">
+          <strong>{{ stagiaire.nom }} {{ stagiaire.prenom }}</strong>
+          <span class="detail">{{ stagiaire.mailEtudiant }} — {{ stagiaire.classe }}</span>
+        </span>
         <button @click="modifierStagiaire(stagiaire)">Modifier</button>
         <button @click="supprimerStagiaire(stagiaire.id)">Supprimer</button>
       </li>
@@ -74,10 +77,16 @@ li {
   justify-content: space-between;
   background: var(--surface);
   border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
   border-radius: 6px;
   padding: 0.75rem 1rem;
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
 }
 
+li:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transform: translateY(-1px);
+}
 li button {
   margin-left: 0.5rem;
   padding: 0.4rem 0.8rem;
@@ -130,5 +139,19 @@ form button:hover {
 li button {
   min-width: 100px;
   text-align: center;
+}
+.infos {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.infos strong {
+  font-weight: 600;
+}
+
+.infos .detail {
+  font-size: 0.85rem;
+  color: var(--text-muted);
 }
 </style>

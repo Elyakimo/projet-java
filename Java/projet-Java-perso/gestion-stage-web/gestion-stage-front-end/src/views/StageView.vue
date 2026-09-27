@@ -53,6 +53,23 @@
     function formaterDate(dateString) {
         return dateString.split('T')[0]
     }
+    function classeStatut(statut){
+      return {
+        CANDIDATURE: 'badge-candidature',
+        EN_COURS: 'badge-en-cours',
+        TERMINE: 'badge-termine',
+        REFUSE: 'badge-refuse'
+      }[statut]
+    }
+
+    function libelleStatut(statut) {
+      return {
+        CANDIDATURE: 'Candidature',
+        EN_COURS: 'En cours',
+        TERMINE: 'Terminé',
+        REFUSE: 'Refusé'
+      }[statut]
+    }
 </script>
 
 <template>
@@ -65,22 +82,30 @@
         />
         
         <div class="filtres">
-            <select v-model="filtreStatut">
-                <option value="">Tous les status</option>
-                <option value="CANDIDATURE">Candidature</option>
-                <option value="EN_COURS">En cours</option>
-                <option value="TERMINE">Terminé</option>
-                <option value="REFUSE">Refusé</option>
+            <select v-model="filtreStatut" id="selectStatut">
+                <option value="" id="Statut">Tous les status</option>
+                <option value="CANDIDATURE" id="Statut_candidature">Candidature</option>
+                <option value="EN_COURS" id="Statut_Encours">En cours</option>
+                <option value="TERMINE" id="Statut_Termine">Terminé</option>
+                <option value="REFUSE" id="Statut_Refuse">Refusé</option>
             </select>
-            <input v-model="filtreNomEtudiant" placeholder="Rechercher par nom d'étudiant" />
-            <input v-model="filtreNomEntreprise" placeholder="Rechercher par nom d'entreprise" />
-            <input v-model="filtreDateDebut" type="date" placeholder="Rechercher par date" />
+            <input v-model="filtreNomEtudiant" placeholder="Rechercher par nom d'étudiant" id="filtreNomEtudiant" />
+            <input v-model="filtreNomEntreprise" placeholder="Rechercher par nom d'organisation" id="filtreNomEntreprise"/>
+            <input v-model="filtreDateDebut" type="date" placeholder="Rechercher par date" id="filtreDate" />
         </div>
         <ul>
             <li v-for="stage in stagesFiltres" :key="stage.id">
-                {{ stage.stagiaire.nom }} — {{ stage.stagiaire.prenom }} — {{ stage.organisation.nomEntreprise }} — {{ formaterDate(stage.dateDebut) }} — {{ formaterDate(stage.dateFin) }}
+              <span>
+                  <span class="badge" :class="classeStatut(stage.statut)">{{ libelleStatut(stage.statut) }}</span>
+                  <span class="infos">
+                    <strong>{{ stage.stagiaire.nom }} {{ stage.stagiaire.prenom }}</strong>
+                    <span class="detail">{{ stage.organisation.nomEntreprise }} — {{ formaterDate(stage.dateDebut) }} au {{ formaterDate(stage.dateFin) }}</span>
+                  </span>
+                </span>
+              <span>
                 <button @click="modifierStages(stage)">Modifier</button>
                 <button @click="supprimerStages(stage.id)">Supprimer</button>
+              </span>
             </li>
         </ul>
     </div>
@@ -105,10 +130,16 @@ li {
   justify-content: space-between;
   background: var(--surface);
   border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
   border-radius: 6px;
   padding: 0.75rem 1rem;
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
 }
 
+li:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transform: translateY(-1px);
+}
 li button {
   margin-left: 0.5rem;
   padding: 0.4rem 0.8rem;
@@ -168,5 +199,47 @@ form button:hover {
 li button {
   min-width: 100px;
   text-align: center;
+}
+.badge {
+  display: inline-block;
+  padding: 0.15rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-right: 0.6rem;
+}
+
+.badge-candidature {
+  background: #EFE6D8;
+  color: #8A6D3B;
+}
+
+.badge-en-cours {
+  background: #E1EAE4;
+  color: var(--accent);
+}
+
+.badge-termine {
+  background: #DCE4E8;
+  color: #46606B;
+}
+
+.badge-refuse {
+  background: #F3DCD5;
+  color: var(--danger);
+}
+.infos {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.infos strong {
+  font-weight: 600;
+}
+
+.infos .detail {
+  font-size: 0.85rem;
+  color: var(--text-muted);
 }
 </style>

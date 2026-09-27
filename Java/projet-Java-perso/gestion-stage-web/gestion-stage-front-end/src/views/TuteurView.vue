@@ -47,9 +47,14 @@
 
         <ul>
             <li v-for="tuteur in tuteurs" :key="tuteur.id">
-                {{ tuteur.nomTuteur }} — {{ tuteur.prenomTuteur }} — {{ tuteur.organisation.nomEntreprise }}
+              <span class="infos">
+                <strong>{{ tuteur.nomTuteur }} {{ tuteur.prenomTuteur }}</strong>
+                <span class="detail">{{ tuteur.organisation.nomEntreprise }}</span>
+              </span>
+              <span>
                 <button @click="modifierTuteurs(tuteur)">Modifier</button>
                 <button @click="supprimerTuteurs(tuteur.id)">Supprimer</button>
+              </span>
             </li>
         </ul>
     </div>
@@ -74,10 +79,16 @@ li {
   justify-content: space-between;
   background: var(--surface);
   border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
   border-radius: 6px;
   padding: 0.75rem 1rem;
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
 }
 
+li:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transform: translateY(-1px);
+}
 li button {
   margin-left: 0.5rem;
   padding: 0.4rem 0.8rem;
@@ -130,5 +141,19 @@ form button:hover {
 li button {
   min-width: 100px;
   text-align: center;
+}
+.infos {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.infos strong {
+  font-weight: 600;
+}
+
+.infos .detail {
+  font-size: 0.85rem;
+  color: var(--text-muted);
 }
 </style>
