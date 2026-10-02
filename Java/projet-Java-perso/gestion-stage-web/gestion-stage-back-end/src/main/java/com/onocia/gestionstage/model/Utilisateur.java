@@ -1,13 +1,10 @@
 package com.onocia.gestionstage.model;
 
 import jakarta.persistence.*;
-
+import java.util.List;
+import java.util.ArrayList;
 import java.util.UUID;
 
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
-
-import ch.qos.logback.classic.pattern.Util;
 
 
 @Entity 
@@ -30,6 +27,14 @@ public class Utilisateur {
     @ManyToOne 
     @JoinColumn(name = "id_stagiaire")
     private Stagiaire stagiaire;
+
+    @ManyToMany 
+    @JoinTable(
+        name = "professeur_stagiaire",
+        joinColumns = @JoinColumn(name = "id_professeur"),
+        inverseJoinColumns = @JoinColumn(name = "id_stagiaire")
+    )
+    private List<Stagiaire> etudiantsSuivis = new ArrayList<>();
 
     public Utilisateur(){
 
@@ -56,6 +61,9 @@ public class Utilisateur {
     public Stagiaire getStagiaire(){
         return stagiaire;
     }
+    public List<Stagiaire> getEtudiantsSuivis(){
+        return etudiantsSuivis;
+    }
     public void setEmail(String email){
         this.email = email;
     }
@@ -67,6 +75,9 @@ public class Utilisateur {
     }
     public void setStagiaire(Stagiaire stagiaire){
         this.stagiaire = stagiaire;
+    }
+    public void setEtudiantsSuivis(List<Stagiaire> etudiantsSuivis){
+        this.etudiantsSuivis = etudiantsSuivis;
     }
     @Override 
     public String toString(){
