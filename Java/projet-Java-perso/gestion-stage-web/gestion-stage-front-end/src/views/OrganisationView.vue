@@ -1,18 +1,19 @@
 <script setup>
 import OrganisationForm from '@/components/OrganisationForm.vue'
 import { ref, onMounted } from 'vue'
+import { apiFetch } from '@/stores/auth'
 
 const organisationEnEdition = ref(null)
 const organisations = ref([])
 
 async function chargerOrganisations(){
-    const response = await fetch('http://localhost:8080/api/organisations')
+    const response = await apiFetch('http://localhost:8080/api/organisations')
     const data = await response.json()
     organisations.value = data
     
 }
 async function supprimerOrganisation(id) {
-    await fetch(`http://localhost:8080/api/organisations/${id}`,{
+    await apiFetch(`http://localhost:8080/api/organisations/${id}`, {
         method: 'DELETE'
     })
     await chargerOrganisations()

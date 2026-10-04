@@ -32,6 +32,7 @@ public class AuthController {
             return ResponseEntity.badRequest().body("Cet email est déjà utilisé.");
         }
 
+        utilisateur.setRole("ETUDIANT");
         utilisateur.setMotDePasse(passwordEncoder.encode(utilisateur.getMotDePasse()));
         utilisateurRepository.save(utilisateur);
 
