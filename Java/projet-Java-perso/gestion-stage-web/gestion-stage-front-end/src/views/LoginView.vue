@@ -1,7 +1,7 @@
 <script setup>
     import { ref } from 'vue'
     import { useRouter } from 'vue-router'
-    import { connecter } from '@/stores/auth'
+    import { connecter, apiFetch } from '@/stores/auth'
 
     const router = useRouter()
     const email = ref('')
@@ -11,7 +11,7 @@
     async function seConnecter() {
         erreur.value =''
 
-        const response = await fetch('http://localhost:8080/api/auth/login', {
+        const response = await apiFetch('http://localhost:8080/api/auth/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email: email.value, motDePasse: motDePasse.value })

@@ -1,6 +1,7 @@
 <script setup>
     import StageForm from '@/components/StageForm.vue'
     import { ref, onMounted, computed } from 'vue'
+    import { apiFetch } from '@/stores/auth'
 
     const filtreStatut = ref('')
     const filtreNomEtudiant = ref('')
@@ -21,13 +22,13 @@
     const stages = ref([])
 
     async function chargerStages(){
-        const response = await fetch('http://localhost:8080/api/stages')
+        const response = await apiFetch('http://localhost:8080/api/stages')
         const data = await response.json()
         stages.value = data
     }
 
     async function supprimerStages(id){
-        await fetch(`http://localhost:8080/api/stages/${id}`, {
+        await apiFetch(`http://localhost:8080/api/stages/${id}`, {
             method: 'DELETE'
         })
         await chargerStages()

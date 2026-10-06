@@ -1,18 +1,19 @@
 <script setup>
 import StagiaireForm from '@/components/StagiaireForm.vue'
 import { ref, onMounted } from 'vue'
+import { apiFetch } from '@/stores/auth'
 
 const stagiaireEnEdition = ref(null)
 const stagiaires = ref([])
 
 async function chargerStagiaires(){
-    const response = await fetch('http://localhost:8080/api/stagiaires')
+    const response = await apiFetch('http://localhost:8080/api/stagiaires')
     const data = await response.json()
     stagiaires.value = data
     
 }
 async function supprimerStagiaire(id) {
-    await fetch(`http://localhost:8080/api/stagiaires/${id}`,{
+    await apiFetch(`http://localhost:8080/api/stagiaires/${id}`,{
         method: 'DELETE'
     })
     await chargerStagiaires()
