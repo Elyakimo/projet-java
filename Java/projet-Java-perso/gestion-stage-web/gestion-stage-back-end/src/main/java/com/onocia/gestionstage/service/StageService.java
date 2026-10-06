@@ -77,22 +77,28 @@ public class StageService {
     }
     
     public List<Stage> getAllPourUtilisateur(String email) {
-        Utilisateur utilisateur = utilisateurRepository.findByEmail(email)
-            .orElseThrow(() -> new RessourceNonTrouveeException("Utilisateur introuvable " + email));
-        if ("PROFESSEUR".equals(utilisateur.getRole())) {
-            List<Stagiaire> etudiantsSuivis = utilisateur.getEtudiantsSuivis();
-            return stageRepository.findAll().stream()
-                .filter(stage -> etudiantsSuivis.contains(stage.getStagiaire()))
-                .toList();
-        }
-        if ("ETUDIANT".equals(utilisateur.getRole())) {
-            Stagiaire sonStage = utilisateur.getStagiaire();
-            return stageRepository.findAll().stream()
-                .filter(stage -> stage.getStagiaire().equals(sonStage))
-                .toList();
-        }
-        return stageRepository.findAll();
+    Utilisateur utilisateur = utilisateurRepository.findByEmail(email)
+        .orElseThrow(() -> new RessourceNonTrouveeException("Utilisateur introuvable : " + email));
+
+    if ("PROFESSEUR".equals(utilisateur.getRole())) {
+        List<Stagiaire> etudiantsSuivis = utilisateur.getEtudiantsSuivis();
+        return stageRepository.findAll().stream()
+            .filter(stage -> etudiantsSuivis.contains(stage.getStagiaire()))
+            .toList();
     }
+
+    if ("ETUDIANT".equals(utilisateur.getRole())) {
+        Stagiaire sonStagiaire = utilisateur.getStagiaire();
+        if (sonStagiaire == null) {
+            throw new RessourceNonTrouveeException("Ce compte n'est associé à aucune fiche stagiaire.");
+        }
+        return stageRepository.findAll().stream()
+            .filter(stage -> stage.getStagiaire().equals(sonStagiaire))
+            .toList();
+    }
+
+    return stageRepository.findAll();
+} 
 
     public void delete(UUID id){
         if (!stageRepository.existsById(id)){

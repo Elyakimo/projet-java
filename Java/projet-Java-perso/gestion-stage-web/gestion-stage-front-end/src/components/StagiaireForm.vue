@@ -1,5 +1,6 @@
 <script setup>
-    import { ref, watch } from 'vue'
+    import { apiFetch } from '@/stores/auth'
+import { ref, watch } from 'vue'
 
     const props = defineProps({
         stagiaireAModifier: {
@@ -45,14 +46,14 @@
         }
     
       if (props.stagiaireAModifier) {
-        await fetch(`http://localhost:8080/api/stagiaires/${props.stagiaireAModifier.id}`, {
+        await apiFetch(`http://localhost:8080/api/stagiaires/${props.stagiaireAModifier.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(donnees)
         })
         emit('updated')
     } else {
-        await fetch('http://localhost:8080/api/stagiaires', {
+        await apiFetch('http://localhost:8080/api/stagiaires', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(donnees)
