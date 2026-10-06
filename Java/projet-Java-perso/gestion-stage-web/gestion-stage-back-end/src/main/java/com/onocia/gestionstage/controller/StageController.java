@@ -5,6 +5,7 @@ import com.onocia.gestionstage.service.StageService;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.Authentication;
 
 import java.util.List;
 import java.util.UUID;
@@ -21,8 +22,8 @@ public class StageController {
     }
 
     @GetMapping
-    public List<Stage> getAllStages() {
-        return stageService.getAll();
+    public List<Stage> getAllStages(Authentication authentication) {
+        return stageService.getAllPourUtilisateur(authentication.getName());
     }
 
     @GetMapping("/{id}")

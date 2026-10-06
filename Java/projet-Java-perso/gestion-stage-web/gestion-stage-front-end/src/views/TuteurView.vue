@@ -1,18 +1,19 @@
 <script setup>
     import TuteurForm from '@/components/TuteurForm.vue'
     import { ref, onMounted } from 'vue'
+    import { apiFetch } from '@/stores/auth'
 
     const tuteurEnEdition = ref(null)
     const tuteurs = ref([])
 
     async function chargerTuteurs(){
-        const response = await fetch('http://localhost:8080/api/tuteurs')
+        const response = await apiFetch('http://localhost:8080/api/tuteurs')
         const data = await response.json()
         tuteurs.value = data
     }
 
     async function supprimerTuteurs(id){
-        await fetch(`http://localhost:8080/api/tuteurs/${id}`, {
+        await apiFetch(`http://localhost:8080/api/tuteurs/${id}`, {
             method: 'DELETE'
         })
         await chargerTuteurs()

@@ -1,18 +1,19 @@
 <script setup>
     import StageForm from '@/components/StageForm.vue'
     import { ref, onMounted, computed } from 'vue'
+    import { apiFetch } from '@/stores/auth'
 
     const filtreStatut = ref('')
     const filtreNomEtudiant = ref('')
     const filtreNomEntreprise = ref('')
-    const filtreDateDebut = ref('')
+    const filtreDateFin = ref('')
 
     const stagesFiltres = computed(() => {
         return stages.value.filter(stage =>{
             const matchStatut = !filtreStatut.value || stage.statut === filtreStatut.value
             const matchEtudiant = !filtreNomEtudiant.value ||  stage.stagiaire.nom.toLowerCase().includes(filtreNomEtudiant.value.toLowerCase())
             const matchEntreprise = !filtreNomEntreprise.value || stage.organisation.nomEntreprise.toLowerCase().includes(filtreNomEntreprise.value.toLowerCase())
-            const matchDate = !filtreDateDebut.value ||  stage.dateDebut.split('T')[0] >= filtreDateDebut.value
+            const matchDate = !filtreDateFin.value ||  stage.dateFin.split('T')[0] >= filtreDateFin.value
             return matchStatut && matchEtudiant && matchEntreprise && matchDate
         })
     })
@@ -21,13 +22,13 @@
     const stages = ref([])
 
     async function chargerStages(){
-        const response = await fetch('http://localhost:8080/api/stages')
+        const response = await apiFetch('http://localhost:8080/api/stages')
         const data = await response.json()
         stages.value = data
     }
 
     async function supprimerStages(id){
-        await fetch(`http://localhost:8080/api/stages/${id}`, {
+        await apiFetch(`http://localhost:8080/api/stages/${id}`, {
             method: 'DELETE'
         })
         await chargerStages()
@@ -91,7 +92,7 @@
             </select>
             <input v-model="filtreNomEtudiant" placeholder="Rechercher par nom d'étudiant" id="filtreNomEtudiant" />
             <input v-model="filtreNomEntreprise" placeholder="Rechercher par nom d'organisation" id="filtreNomEntreprise"/>
-            <input v-model="filtreDateDebut" type="date" placeholder="Rechercher par date" id="filtreDate" />
+            <input v-model="filtreDateFin" type="date" placeholder="Rechercher par date" id="filtreDate" />
         </div>
         <ul>
             <li v-for="stage in stagesFiltres" :key="stage.id">
@@ -99,7 +100,7 @@
                   <span class="badge" :class="classeStatut(stage.statut)">{{ libelleStatut(stage.statut) }}</span>
                   <span class="infos">
                     <strong>{{ stage.stagiaire.nom }} {{ stage.stagiaire.prenom }}</strong>
-                    <span class="detail">{{ stage.organisation.nomEntreprise }} — {{ formaterDate(stage.dateDebut) }} au {{ formaterDate(stage.dateFin) }}</span>
+                    <span class="detail">{{ stage.organisation.nomEntreprise }} — stage du {{ formaterDate(stage.dateDebut) }} au {{ formaterDate(stage.dateFin) }}</span>
                   </span>
                 </span>
               <span>

@@ -1,5 +1,6 @@
 <script setup>
     import { ref, onMounted, watch } from 'vue'
+    import { apiFetch } from '@/stores/auth'
 
     const props = defineProps({
         tuteurAModifier: {
@@ -17,7 +18,7 @@
     const organisations = ref([])
 
     async function chargerOrganisations() {
-        const response = await fetch('http://localhost:8080/api/organisations')
+        const response = await apiFetch('http://localhost:8080/api/organisations')
         organisations.value = await response.json()
     }
 
@@ -48,17 +49,17 @@
         }
 
         if (props.tuteurAModifier){
-            await fetch(`http://localhost:8080/api/tuteurs/${props.tuteurAModifier.id}`, {
+            await apiFetch(`http://localhost:8080/api/tuteurs/${props.tuteurAModifier.id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(donnees)
             })
             emit('updated')
         } else {
-            await fetch('http://localhost:8080/api/tuteurs', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(donnees)
+            await apiFetch('http://localhost:8080/api/tuteurs', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(donnees)
             })
             emit('created')
         }

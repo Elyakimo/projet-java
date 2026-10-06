@@ -1,5 +1,7 @@
 package com.onocia.gestionstage.service;
 
+import com.onocia.gestionstage.model.Utilisateur;
+import com.onocia.gestionstage.repository.UtilisateurRepository;
 import com.onocia.gestionstage.model.Stage;
 import com.onocia.gestionstage.model.Organisation;
 import com.onocia.gestionstage.model.Tuteur;
@@ -22,12 +24,14 @@ public class StageService {
     private final TuteurRepository tuteurRepository;
     private final OrganisationRepository organisationRepository;
     private final StagiaireRepository stagiaireRepository;
+    private final UtilisateurRepository utilisateurRepository;
 
-    public StageService(StageRepository stageRepository, TuteurRepository tuteurRepository, OrganisationRepository organisationRepository, StagiaireRepository stagiaireRepository){
+    public StageService(StageRepository stageRepository, TuteurRepository tuteurRepository, OrganisationRepository organisationRepository, StagiaireRepository stagiaireRepository, UtilisateurRepository utilisateurRepository){
         this.stageRepository = stageRepository;
         this.tuteurRepository = tuteurRepository;
         this.organisationRepository = organisationRepository;     
         this.stagiaireRepository = stagiaireRepository;
+        this.utilisateurRepository = utilisateurRepository;
     }
     
     public List<Stage> getAll(){
@@ -71,6 +75,30 @@ public class StageService {
         existant.setStagiaire(newStagiaire);
         return stageRepository.save(existant);
     }
+    
+    public List<Stage> getAllPourUtilisateur(String email) {
+    Utilisateur utilisateur = utilisateurRepository.findByEmail(email)
+        .orElseThrow(() -> new RessourceNonTrouveeException("Utilisateur introuvable : " + email));
+
+    if ("PROFESSEUR".equals(utilisateur.getRole())) {
+        List<Stagiaire> etudiantsSuivis = utilisateur.getEtudiantsSuivis();
+        return stageRepository.findAll().stream()
+            .filter(stage -> etudiantsSuivis.contains(stage.getStagiaire()))
+            .toList();
+    }
+
+    if ("ETUDIANT".equals(utilisateur.getRole())) {
+        Stagiaire sonStagiaire = utilisateur.getStagiaire();
+        if (sonStagiaire == null) {
+            throw new RessourceNonTrouveeException("Ce compte n'est associé à aucune fiche stagiaire.");
+        }
+        return stageRepository.findAll().stream()
+            .filter(stage -> stage.getStagiaire().equals(sonStagiaire))
+            .toList();
+    }
+
+    return stageRepository.findAll();
+} 
 
     public void delete(UUID id){
         if (!stageRepository.existsById(id)){

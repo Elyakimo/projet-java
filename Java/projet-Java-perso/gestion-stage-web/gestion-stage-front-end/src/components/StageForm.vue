@@ -1,5 +1,6 @@
 <script setup>
     import { ref, onMounted, watch } from 'vue'
+    import { apiFetch } from '@/stores/auth'
 
     const props = defineProps({
         stageAModifier: {
@@ -21,17 +22,17 @@
     const stagiaires = ref([])
 
     async function chargerOrganisation() {
-        const response = await fetch('http://localhost:8080/api/organisations')
+        const response = await apiFetch('http://localhost:8080/api/organisations')
         organisations.value = await response.json()
     }
 
     async function chargerStagiaire(){
-        const response = await fetch('http://localhost:8080/api/stagiaires')
+        const response = await apiFetch('http://localhost:8080/api/stagiaires')
         stagiaires.value = await response.json()
     }
 
     async function chargerTuteur(){
-        const response = await fetch('http://localhost:8080/api/tuteurs')
+        const response = await apiFetch('http://localhost:8080/api/tuteurs')
         tuteurs.value = await response.json()
     }
 
@@ -71,14 +72,14 @@
     
 
     if (props.stageAModifier){
-        await fetch(`http://localhost:8080/api/stages/${props.stageAModifier.id}`, {
+        await apiFetch(`http://localhost:8080/api/stages/${props.stageAModifier.id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(donnees)
         })
         emit('updated')
     } else {
-        await fetch('http://localhost:8080/api/stages', {
+        await apiFetch('http://localhost:8080/api/stages', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(donnees)

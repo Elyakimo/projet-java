@@ -3,8 +3,9 @@ import HomeView from '../views/HomeView.vue'
 import OrganisationView from '../views/OrganisationView.vue'
 import StagiaireView from '@/views/StagiaireView.vue'
 import TuteurView from '@/views/TuteurView.vue'
-import StageForm from '@/components/StageForm.vue'
 import StageView from '@/views/StageView.vue'
+import LoginView from '@/views/LoginView.vue'
+import GestionEtudiantsView from '@/views/GestionEtudiantsView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -41,6 +42,16 @@ const router = createRouter({
       path: '/stages',
       name: 'stages',
       component: StageView,
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: LoginView,
+    },
+    {
+      path: '/gestion-etudiants',
+      name: 'gestion-etudiants',
+      component: GestionEtudiantsView,
     },
   ],
 })

@@ -13,6 +13,8 @@ import { RouterLink, RouterView } from 'vue-router'
         <RouterLink to="/tuteurs">Tuteurs</RouterLink>
         <RouterLink to="/stages">Stages</RouterLink>
         <RouterLink to="/about">À propos</RouterLink>
+        <RouterLink to="/gestion-etudiants">Gestion des étudiants suivis</RouterLink>
+        <RouterLink to="/login">Connexion</RouterLink>
 
       </nav>
     </div>
